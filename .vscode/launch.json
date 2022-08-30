@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "node ts debug stack",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "yarn start",
+            "console": "integratedTerminal",
+            "env": {
+
+            }
+
+        }
+    ]
+
+}
