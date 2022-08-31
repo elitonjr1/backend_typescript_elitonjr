@@ -24,8 +24,11 @@ var CursoRepository = (function () {
         data.push(dataModel);
         return curso_entity_1.CursoEntity.build(dataModel.id, dataModel.dataInicio, dataModel.descricao);
     };
+    CursoRepository.prototype.getAll = function () {
+        return data;
+    };
     CursoRepository.prototype.search = function (model) {
-        throw new Error("Method not implemented.");
+        return data.find(function (element) { return element.descricao === model.descricao; });
     };
     CursoRepository = __decorate([
         (0, inversify_1.injectable)()

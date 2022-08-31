@@ -26,6 +26,9 @@ var App = (function () {
         container
             .bind(types_1.default.CursoRepositoryInterface)
             .to(curso_repository_1.CursoRepository);
+        container
+            .bind(types_1.default.ListaCursoByDescriptionInterface)
+            .to(lista_cursos_usecases_1.ListaCursoUseCase);
     };
     App.prototype.createService = function () {
         var server = new inversify_express_utils_1.InversifyExpressServer(container);

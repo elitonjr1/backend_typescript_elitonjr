@@ -4,7 +4,10 @@ import * as express from "express";
 
 import "./presentation/controllers/cursos.controller";
 
-import { ListaCursoInterface } from "./core/usecases/cursos/lista-cursos/lista-cursos.interface";
+import {
+  ListaCursoByDescriptionInterface,
+  ListaCursoInterface,
+} from "./core/usecases/cursos/lista-cursos/lista-cursos.interface";
 import { ListaCursoUseCase } from "./core/usecases/cursos/lista-cursos/lista-cursos.usecases";
 import { Container } from "inversify";
 import { InversifyExpressServer } from "inversify-express-utils";
@@ -32,6 +35,11 @@ export class App {
     container
       .bind<CursoRepositortyInterface>(TYPES.CursoRepositoryInterface)
       .to(CursoRepository);
+    container
+      .bind<ListaCursoByDescriptionInterface>(
+        TYPES.ListaCursoByDescriptionInterface
+      )
+      .to(ListaCursoUseCase);
   }
 
   createService(): void {

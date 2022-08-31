@@ -7,6 +7,7 @@ export declare type CursoRepositoryCreateParams = {
     descricao: string;
 };
 export interface CursoRepositortyInterface {
+    getAll(): CursoEntity[];
     search(model: CursoRepositorySearchParams): CursoEntity[];
     create(model: CursoRepositoryCreateParams): CursoEntity;
 }

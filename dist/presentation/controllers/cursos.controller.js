@@ -73,17 +73,26 @@ var types_1 = require("../../types");
 var validate_dto_middleware_1 = require("../../presentation/middlewares/validate.dto.middleware");
 var CursoController = (function (_super) {
     __extends(CursoController, _super);
-    function CursoController(listaCursoUseCase, criaCursoUseCase) {
+    function CursoController(listaCursoUseCase, listaCursoByDescriptionUseCase, criaCursoUseCase) {
         var _this = _super.call(this) || this;
         _this._listaCursoUseCase = listaCursoUseCase;
         _this._criaCursoUseCase = criaCursoUseCase;
+        _this._listaCursoByDescriptionUseCase = listaCursoByDescriptionUseCase;
         return _this;
     }
     CursoController.prototype.listar = function (query) {
         return __awaiter(this, void 0, void 0, function () {
             var result;
             return __generator(this, function (_a) {
-                result = this._listaCursoUseCase.execute();
+                result = [];
+                if (query.descricao) {
+                    result = this._listaCursoByDescriptionUseCase.execute({
+                        descricao: query.descricao,
+                    });
+                }
+                else {
+                    result = this._listaCursoUseCase.execute();
+                }
                 return [2, this.json(result)];
             });
         });
@@ -170,8 +179,9 @@ var CursoController = (function (_super) {
     CursoController = __decorate([
         (0, inversify_express_utils_1.controller)("/cursos"),
         __param(0, (0, inversify_1.inject)(types_1.default.ListaCursoInterface)),
-        __param(1, (0, inversify_1.inject)(types_1.default.CriaCursoInterface)),
-        __metadata("design:paramtypes", [Object, Object])
+        __param(1, (0, inversify_1.inject)(types_1.default.ListaCursoByDescriptionInterface)),
+        __param(2, (0, inversify_1.inject)(types_1.default.CriaCursoInterface)),
+        __metadata("design:paramtypes", [Object, Object, Object])
     ], CursoController);
     return CursoController;
 }(inversify_express_utils_1.BaseHttpController));

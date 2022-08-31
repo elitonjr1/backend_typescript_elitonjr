@@ -20,7 +20,7 @@ var ListaCursoDTO;
             (0, class_validator_1.IsString)(),
             (0, class_validator_1.IsNotEmpty)(),
             __metadata("design:type", String)
-        ], Query.prototype, "status", void 0);
+        ], Query.prototype, "descricao", void 0);
         return Query;
     }());
     ListaCursoDTO.Query = Query;

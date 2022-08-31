@@ -27,7 +27,11 @@ export class CursoRepository implements CursoRepositortyInterface {
       dataModel.descricao
     );
   }
+  getAll(): CursoEntity[] {
+    return data;
+  }
+
   search(model: CursoRepositorySearchParams): CursoEntity[] {
-    throw new Error("Method not implemented.");
+    return data.find((element) => element.descricao === model.descricao);
   }
 }

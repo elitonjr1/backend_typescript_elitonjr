@@ -1,4 +1,7 @@
-import { ListaCursoInterface } from "../../core/usecases/cursos/lista-cursos/lista-cursos.interface";
+import {
+  ListaCursoByDescriptionInterface,
+  ListaCursoInterface,
+} from "../../core/usecases/cursos/lista-cursos/lista-cursos.interface";
 import { AlteraCursoDto } from "../../presentation/dtos/curso-alterar.dto";
 import { CriaCursoDto } from "../../presentation/dtos/curso-criar.dto";
 import { ListaCursoDTO } from "../../presentation/dtos/curso-lista.dto";
@@ -27,26 +30,52 @@ export class CursoController
   implements interfaces.Controller
 {
   private _listaCursoUseCase: ListaCursoInterface;
+  private _listaCursoByDescriptionUseCase: ListaCursoByDescriptionInterface;
   private _criaCursoUseCase: CriaCursoInterface;
 
   constructor(
     @inject(TYPES.ListaCursoInterface) listaCursoUseCase: ListaCursoInterface,
+    @inject(TYPES.ListaCursoByDescriptionInterface)
+    listaCursoByDescriptionUseCase: ListaCursoByDescriptionInterface,
     @inject(TYPES.CriaCursoInterface) criaCursoUseCase: CriaCursoInterface
   ) {
     super();
 
     this._listaCursoUseCase = listaCursoUseCase;
     this._criaCursoUseCase = criaCursoUseCase;
+    this._listaCursoByDescriptionUseCase = listaCursoByDescriptionUseCase;
   }
 
   @httpGet("/")
   public async listar(
     @queryParam() query: ListaCursoDTO.Query
   ): Promise<interfaces.IHttpActionResult> {
-    const result: any[] = this._listaCursoUseCase.execute();
+    // const result: any[] = this._listaCursoUseCase.execute({
+    //   descricao: query.descricao,
+    // });
+    let result = [];
+
+    if (query.descricao) {
+      result = this._listaCursoByDescriptionUseCase.execute({
+        descricao: query.descricao,
+      });
+    } else {
+      result = this._listaCursoUseCase.execute();
+    }
 
     return this.json(result);
   }
+
+  /*@httpGet("/")
+  public async listByDescription(
+    @queryParam() query: ListaCursoDTO.Query
+  ): Promise<interfaces.IHttpActionResult> {
+    const result: any[] = this._listaCursoByDescriptionUseCase.execute({
+      descricao: query.descricao,
+    });
+
+    return this.json(result);
+  }*/
 
   @httpGet("/:id")
   public async listarById(
