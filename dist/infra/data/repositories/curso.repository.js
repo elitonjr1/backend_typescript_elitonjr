@@ -30,6 +30,19 @@ var CursoRepository = (function () {
     CursoRepository.prototype.search = function (model) {
         return data.find(function (element) { return element.descricao === model.descricao; });
     };
+    CursoRepository.prototype.alter = function (model) {
+        var cursoAlterado = data.findIndex(function (obj) { return obj.id === model.id; });
+        data[cursoAlterado].descricao = model.descricao;
+        data[cursoAlterado].dataInicio = model.dataInicio;
+        return data[cursoAlterado];
+    };
+    CursoRepository.prototype.delete = function (model) {
+        var cursoDeletado = data.findIndex(function (obj) { return obj.id === model.id; });
+        if (cursoDeletado > -1) {
+            data.splice(cursoDeletado, 1);
+        }
+        return data;
+    };
     CursoRepository = __decorate([
         (0, inversify_1.injectable)()
     ], CursoRepository);

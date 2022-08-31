@@ -5,6 +5,8 @@ var TYPES = {
     ListaCursoByDescriptionInterface: Symbol.for("ListaCursoByDescriptionInterface"),
     CriaCursoInterface: Symbol.for("CriaCursoInterface"),
     CursoRepositoryInterface: Symbol.for("CursoRepositoryInterface"),
+    AlteraCursoInterface: Symbol.for("AlteraCursoInterface"),
+    DeletaCursoInterface: Symbol.for("DeletaCursoInterface"),
 };
 exports.default = TYPES;
 //# sourceMappingURL=types.js.map

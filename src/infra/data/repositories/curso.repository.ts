@@ -1,7 +1,9 @@
 import { CursoEntity } from "../../../core/entity/curso.entity";
 import {
   CursoRepositortyInterface,
+  CursoRepositoryAlterParams,
   CursoRepositoryCreateParams,
+  CursoRepositoryDeleteParams,
   CursoRepositorySearchParams,
 } from "../../../core/providers/data/curso-repository.interface";
 import { injectable } from "inversify";
@@ -33,5 +35,24 @@ export class CursoRepository implements CursoRepositortyInterface {
 
   search(model: CursoRepositorySearchParams): CursoEntity[] {
     return data.find((element) => element.descricao === model.descricao);
+  }
+
+  alter(model: CursoRepositoryAlterParams): CursoEntity {
+    const cursoAlterado = data.findIndex((obj) => obj.id === model.id);
+
+    data[cursoAlterado].descricao = model.descricao;
+    data[cursoAlterado].dataInicio = model.dataInicio;
+
+    return data[cursoAlterado];
+  }
+
+  delete(model: CursoRepositoryDeleteParams): CursoEntity[] {
+    const cursoDeletado = data.findIndex((obj) => obj.id === model.id);
+
+    if (cursoDeletado > -1) {
+      data.splice(cursoDeletado, 1);
+    }
+
+    return data;
   }
 }

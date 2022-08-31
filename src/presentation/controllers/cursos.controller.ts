@@ -20,9 +20,14 @@ import {
   requestParam,
 } from "inversify-express-utils";
 import TYPES from "../../types";
-import { ValidateDTOMiddleware } from "../../presentation/middlewares/validate.dto.middleware";
+import {
+  ValidateAlterMiddlare,
+  ValidateDTOMiddleware,
+} from "../../presentation/middlewares/validate.dto.middleware";
 
 import { CriaCursoInterface } from "../../core/usecases/cursos/cria-cursos/cria-curso.interface";
+import { AlteraCursoInterface } from "../../core/usecases/cursos/altera-cursos/altera-curso.interface";
+import { DeletaCursoInterface } from "../../core/usecases/cursos/deleta-cursos/deleta-curso.interface";
 
 @controller("/cursos")
 export class CursoController
@@ -32,27 +37,31 @@ export class CursoController
   private _listaCursoUseCase: ListaCursoInterface;
   private _listaCursoByDescriptionUseCase: ListaCursoByDescriptionInterface;
   private _criaCursoUseCase: CriaCursoInterface;
+  private _alteraCursoUseCase: AlteraCursoInterface;
+  private _deletaCursoUseCase: DeletaCursoInterface;
 
   constructor(
     @inject(TYPES.ListaCursoInterface) listaCursoUseCase: ListaCursoInterface,
     @inject(TYPES.ListaCursoByDescriptionInterface)
     listaCursoByDescriptionUseCase: ListaCursoByDescriptionInterface,
-    @inject(TYPES.CriaCursoInterface) criaCursoUseCase: CriaCursoInterface
+    @inject(TYPES.CriaCursoInterface) criaCursoUseCase: CriaCursoInterface,
+    @inject(TYPES.AlteraCursoInterface)
+    alteraCursoUseCase: AlteraCursoInterface,
+    @inject(TYPES.DeletaCursoInterface) deletaCursoUseCase: DeletaCursoInterface
   ) {
     super();
 
     this._listaCursoUseCase = listaCursoUseCase;
     this._criaCursoUseCase = criaCursoUseCase;
     this._listaCursoByDescriptionUseCase = listaCursoByDescriptionUseCase;
+    this._alteraCursoUseCase = alteraCursoUseCase;
+    this._deletaCursoUseCase = deletaCursoUseCase;
   }
 
   @httpGet("/")
   public async listar(
     @queryParam() query: ListaCursoDTO.Query
   ): Promise<interfaces.IHttpActionResult> {
-    // const result: any[] = this._listaCursoUseCase.execute({
-    //   descricao: query.descricao,
-    // });
     let result = [];
 
     if (query.descricao) {
@@ -64,28 +73,6 @@ export class CursoController
     }
 
     return this.json(result);
-  }
-
-  /*@httpGet("/")
-  public async listByDescription(
-    @queryParam() query: ListaCursoDTO.Query
-  ): Promise<interfaces.IHttpActionResult> {
-    const result: any[] = this._listaCursoByDescriptionUseCase.execute({
-      descricao: query.descricao,
-    });
-
-    return this.json(result);
-  }*/
-
-  @httpGet("/:id")
-  public async listarById(
-    @requestParam("id") id: string
-  ): Promise<interfaces.IHttpActionResult> {
-    return this.json({
-      id: "1",
-      descricao: "BackEnd Typescript",
-      status: "ativo",
-    });
   }
 
   @httpPost("/", ValidateDTOMiddleware(CriaCursoDto.Body, "body"))
@@ -100,24 +87,28 @@ export class CursoController
     return this.json(result);
   }
 
-  @httpPut("/:id")
+  @httpPut("/:id", ValidateAlterMiddlare(AlteraCursoDto.Body, "body"))
   public async alterarCurso(
     @requestParam("id") id: string,
     @requestBody() body: AlteraCursoDto.Body
   ): Promise<interfaces.IHttpActionResult> {
-    return this.json({
-      id: "1",
-      descricao: "BackEnd Typescript",
-      status: "ativo",
+    const result = this._alteraCursoUseCase.execute({
+      id: id,
+      dataInicio: body.dataInicio,
+      descricao: body.descricao,
     });
+
+    return this.json(result);
   }
 
   @httpDelete("/:id")
   public async deletarCurso(
     @requestParam("id") id: string
   ): Promise<interfaces.IHttpActionResult> {
-    return this.json({
-      message: "curso deletado",
+    const result = this._deletaCursoUseCase.execute({
+      id: id,
     });
+
+    return this.json(result);
   }
 }

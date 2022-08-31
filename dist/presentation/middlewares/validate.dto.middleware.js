@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ValidateDTOMiddleware = void 0;
+exports.ValidateAlterMiddlare = exports.ValidateDTOMiddleware = void 0;
 var class_transformer_1 = require("class-transformer");
 var class_validator_1 = require("class-validator");
 var ValidateDTOMiddleware = function (model, httpContext) {
@@ -63,4 +63,28 @@ var ValidateDTOMiddleware = function (model, httpContext) {
     }); };
 };
 exports.ValidateDTOMiddleware = ValidateDTOMiddleware;
+var ValidateAlterMiddlare = function (model, httpContext) {
+    return function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+        var output, validationResult, messages;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    output = (0, class_transformer_1.plainToInstance)(model, req[httpContext]);
+                    return [4, (0, class_validator_1.validate)(output, {})];
+                case 1:
+                    validationResult = _a.sent();
+                    if (validationResult.length > 0) {
+                        messages = validationResult.map(function (error) {
+                            return Object.values(error.constraints).join(", ");
+                        });
+                        return [2, res.status(400).json({
+                                messages: messages,
+                            })];
+                    }
+                    return [2, next()];
+            }
+        });
+    }); };
+};
+exports.ValidateAlterMiddlare = ValidateAlterMiddlare;
 //# sourceMappingURL=validate.dto.middleware.js.map

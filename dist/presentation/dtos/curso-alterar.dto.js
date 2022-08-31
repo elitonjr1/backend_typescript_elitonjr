@@ -25,7 +25,7 @@ var AlteraCursoDto;
             (0, class_validator_1.IsString)(),
             (0, class_validator_1.IsNotEmpty)(),
             __metadata("design:type", String)
-        ], Body.prototype, "status", void 0);
+        ], Body.prototype, "dataInicio", void 0);
         return Body;
     }());
     AlteraCursoDto.Body = Body;

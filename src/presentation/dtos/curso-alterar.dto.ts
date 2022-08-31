@@ -8,6 +8,6 @@ export namespace AlteraCursoDto {
 
     @IsString()
     @IsNotEmpty()
-    status: string;
+    dataInicio: string;
   }
 }

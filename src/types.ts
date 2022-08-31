@@ -5,6 +5,8 @@ const TYPES = {
   ),
   CriaCursoInterface: Symbol.for("CriaCursoInterface"),
   CursoRepositoryInterface: Symbol.for("CursoRepositoryInterface"),
+  AlteraCursoInterface: Symbol.for("AlteraCursoInterface"),
+  DeletaCursoInterface: Symbol.for("DeletaCursoInterface"),
 };
 
 export default TYPES;

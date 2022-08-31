@@ -10,6 +10,8 @@ var inversify_express_utils_1 = require("inversify-express-utils");
 var types_1 = require("./types");
 var cria_curso_usecases_1 = require("./core/usecases/cursos/cria-cursos/cria-curso.usecases");
 var curso_repository_1 = require("./infra/data/repositories/curso.repository");
+var altera_curso_usecases_1 = require("./core/usecases/cursos/altera-cursos/altera-curso.usecases");
+var deleta_curso_usecases_1 = require("./core/usecases/cursos/deleta-cursos/deleta-curso.usecases");
 var container = new inversify_1.Container();
 var App = (function () {
     function App() {
@@ -29,6 +31,12 @@ var App = (function () {
         container
             .bind(types_1.default.ListaCursoByDescriptionInterface)
             .to(lista_cursos_usecases_1.ListaCursoUseCase);
+        container
+            .bind(types_1.default.AlteraCursoInterface)
+            .to(altera_curso_usecases_1.AlteraCursoUseCase);
+        container
+            .bind(types_1.default.DeletaCursoInterface)
+            .to(deleta_curso_usecases_1.DeletaCursoUseCase);
     };
     App.prototype.createService = function () {
         var server = new inversify_express_utils_1.InversifyExpressServer(container);

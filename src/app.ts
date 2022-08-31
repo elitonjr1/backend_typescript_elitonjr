@@ -16,6 +16,10 @@ import { CriaCursoInterface } from "./core/usecases/cursos/cria-cursos/cria-curs
 import { CriaCursoUseCase } from "./core/usecases/cursos/cria-cursos/cria-curso.usecases";
 import { CursoRepositortyInterface } from "./core/providers/data/curso-repository.interface";
 import { CursoRepository } from "./infra/data/repositories/curso.repository";
+import { AlteraCursoInterface } from "./core/usecases/cursos/altera-cursos/altera-curso.interface";
+import { AlteraCursoUseCase } from "./core/usecases/cursos/altera-cursos/altera-curso.usecases";
+import { DeletaCursoInterface } from "./core/usecases/cursos/deleta-cursos/deleta-curso.interface";
+import { DeletaCursoUseCase } from "./core/usecases/cursos/deleta-cursos/deleta-curso.usecases";
 
 const container = new Container();
 
@@ -40,6 +44,12 @@ export class App {
         TYPES.ListaCursoByDescriptionInterface
       )
       .to(ListaCursoUseCase);
+    container
+      .bind<AlteraCursoInterface>(TYPES.AlteraCursoInterface)
+      .to(AlteraCursoUseCase);
+    container
+      .bind<DeletaCursoInterface>(TYPES.DeletaCursoInterface)
+      .to(DeletaCursoUseCase);
   }
 
   createService(): void {

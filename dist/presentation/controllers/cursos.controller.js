@@ -73,11 +73,13 @@ var types_1 = require("../../types");
 var validate_dto_middleware_1 = require("../../presentation/middlewares/validate.dto.middleware");
 var CursoController = (function (_super) {
     __extends(CursoController, _super);
-    function CursoController(listaCursoUseCase, listaCursoByDescriptionUseCase, criaCursoUseCase) {
+    function CursoController(listaCursoUseCase, listaCursoByDescriptionUseCase, criaCursoUseCase, alteraCursoUseCase, deletaCursoUseCase) {
         var _this = _super.call(this) || this;
         _this._listaCursoUseCase = listaCursoUseCase;
         _this._criaCursoUseCase = criaCursoUseCase;
         _this._listaCursoByDescriptionUseCase = listaCursoByDescriptionUseCase;
+        _this._alteraCursoUseCase = alteraCursoUseCase;
+        _this._deletaCursoUseCase = deletaCursoUseCase;
         return _this;
     }
     CursoController.prototype.listar = function (query) {
@@ -97,17 +99,6 @@ var CursoController = (function (_super) {
             });
         });
     };
-    CursoController.prototype.listarById = function (id) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2, this.json({
-                        id: "1",
-                        descricao: "BackEnd Typescript",
-                        status: "ativo",
-                    })];
-            });
-        });
-    };
     CursoController.prototype.criarCurso = function (body) {
         return __awaiter(this, void 0, void 0, function () {
             var result;
@@ -122,21 +113,25 @@ var CursoController = (function (_super) {
     };
     CursoController.prototype.alterarCurso = function (id, body) {
         return __awaiter(this, void 0, void 0, function () {
+            var result;
             return __generator(this, function (_a) {
-                return [2, this.json({
-                        id: "1",
-                        descricao: "BackEnd Typescript",
-                        status: "ativo",
-                    })];
+                result = this._alteraCursoUseCase.execute({
+                    id: id,
+                    dataInicio: body.dataInicio,
+                    descricao: body.descricao,
+                });
+                return [2, this.json(result)];
             });
         });
     };
     CursoController.prototype.deletarCurso = function (id) {
         return __awaiter(this, void 0, void 0, function () {
+            var result;
             return __generator(this, function (_a) {
-                return [2, this.json({
-                        message: "curso deletado",
-                    })];
+                result = this._deletaCursoUseCase.execute({
+                    id: id,
+                });
+                return [2, this.json(result)];
             });
         });
     };
@@ -148,13 +143,6 @@ var CursoController = (function (_super) {
         __metadata("design:returntype", Promise)
     ], CursoController.prototype, "listar", null);
     __decorate([
-        (0, inversify_express_utils_1.httpGet)("/:id"),
-        __param(0, (0, inversify_express_utils_1.requestParam)("id")),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", [String]),
-        __metadata("design:returntype", Promise)
-    ], CursoController.prototype, "listarById", null);
-    __decorate([
         (0, inversify_express_utils_1.httpPost)("/", (0, validate_dto_middleware_1.ValidateDTOMiddleware)(curso_criar_dto_1.CriaCursoDto.Body, "body")),
         __param(0, (0, inversify_express_utils_1.requestBody)()),
         __metadata("design:type", Function),
@@ -162,7 +150,7 @@ var CursoController = (function (_super) {
         __metadata("design:returntype", Promise)
     ], CursoController.prototype, "criarCurso", null);
     __decorate([
-        (0, inversify_express_utils_1.httpPut)("/:id"),
+        (0, inversify_express_utils_1.httpPut)("/:id", (0, validate_dto_middleware_1.ValidateAlterMiddlare)(curso_alterar_dto_1.AlteraCursoDto.Body, "body")),
         __param(0, (0, inversify_express_utils_1.requestParam)("id")),
         __param(1, (0, inversify_express_utils_1.requestBody)()),
         __metadata("design:type", Function),
@@ -181,7 +169,9 @@ var CursoController = (function (_super) {
         __param(0, (0, inversify_1.inject)(types_1.default.ListaCursoInterface)),
         __param(1, (0, inversify_1.inject)(types_1.default.ListaCursoByDescriptionInterface)),
         __param(2, (0, inversify_1.inject)(types_1.default.CriaCursoInterface)),
-        __metadata("design:paramtypes", [Object, Object, Object])
+        __param(3, (0, inversify_1.inject)(types_1.default.AlteraCursoInterface)),
+        __param(4, (0, inversify_1.inject)(types_1.default.DeletaCursoInterface)),
+        __metadata("design:paramtypes", [Object, Object, Object, Object, Object])
     ], CursoController);
     return CursoController;
 }(inversify_express_utils_1.BaseHttpController));
