@@ -23,7 +23,8 @@
     "inversify-express-utils": "^6.4.3",
     "prettier": "^2.7.1",
     "reflect-metadata": "^0.1.13",
-    "typescript": "*"
+    "typescript": "*",
+    "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.0.0",
