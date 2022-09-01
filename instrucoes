@@ -1,0 +1,47 @@
+Salve, como eu to salvando na memoria nao vai ter nada gravado.
+
+Entao primeira coisa é o inserir curso
+
+post http://localhost:3000/cursos
+
+body
+
+{
+"descricao": "TESTE 3",
+"dataInicio": "01/01/2022",
+"status": "Inativo"
+}
+
+dai insere quantos quiser, pra testar as outras operacoes
+
+depois o listar curso
+
+o listar curso tem dois jeitos
+
+se vc passar sem nada, vai trazer todos os cursos
+get http://localhost:3000/cursos
+
+se vc passar queryparam
+http://localhost:3000/cursos?descricao=TESTE 2
+
+vai listar so o da queryparam.
+
+alterar
+
+put http://localhost:3000/cursos/{id}
+
+passando o id, to usando uma biblioteca pra gerar o id na validacao pra mim.
+
+entao da o get pra buscar o curso e copiar o id dele e passa.
+
+delete
+
+delete http://localhost:3000/cursos/{id}
+
+mesma coisa, to usando uma biblioteca pra gerar o id na validacao pra mim.
+
+entao da o get pra buscar o curso e copiar o id dele e passa.
+
+simples assim xD
+
+eu queria fazer um validador pra nao deixar inserir com a mesma descricao, mas nao consegui achar uma forma legal de fazer ):
