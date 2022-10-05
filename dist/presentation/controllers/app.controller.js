@@ -32,16 +32,16 @@ var AppController = (function (_super) {
         return _super.call(this) || this;
     }
     AppController.prototype.index = function () {
-        return this.json({ message: "Health check!" });
+        return this.json({ message: "service ok!" });
     };
     __decorate([
-        (0, inversify_express_utils_1.httpGet)('/'),
+        (0, inversify_express_utils_1.httpGet)("/"),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", Object)
     ], AppController.prototype, "index", null);
     AppController = __decorate([
-        (0, inversify_express_utils_1.controller)('/'),
+        (0, inversify_express_utils_1.controller)("/"),
         __metadata("design:paramtypes", [])
     ], AppController);
     return AppController;
